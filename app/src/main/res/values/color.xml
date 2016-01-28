@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+ <item name="purple" type="color">#ff8836ff</item>
+    <item name="pink" type="color">#ffff71e3</item>
+    <item name="orange" type="color">#ffff6152</item>
+    <item name="lightgreen" type="color">#d282ffa9</item>
+    <item name="blue" type="color">#d241a8ff</item>
+    <item name="white" type="color">#FFFFFF</item>
+
+   <item name="primary" type="color">#BA68C8</item>
+   <item name="primarydark" type="color">#9C27B0</item>
+
+
+</resources>
