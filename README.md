@@ -13,3 +13,12 @@ Search Note
 
 
 Add color
+
+
+
+Future Addition
+
+Alarm
+Pin list
+Voice Message
+
