@@ -1,6 +1,6 @@
 # Notes_App
 
-Features 
+<u><B>Features : </u></B> 
 
 
 Add/Edit Notes 
@@ -14,11 +14,15 @@ Search Note
 
 Add color
 
+<br>
 
-
-Future Addition
+<B><u> Future Addition</u></B> 
 
 Alarm
+
+
 Pin list
+
+
 Voice Message
 
