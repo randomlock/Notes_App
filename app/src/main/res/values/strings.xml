@@ -5,6 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_note">AddNote</string>
     <string name="searchlabel"></string>
+    <string name="action_save">Save to Gallery</string>
     <string name="searchhint">Notes</string>
     <string name="title_activity_image_viewer">ImageViewer</string>
+    <string name="delete_image">Delete</string>
 </resources>

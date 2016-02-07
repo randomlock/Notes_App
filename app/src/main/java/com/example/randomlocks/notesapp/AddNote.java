@@ -1,7 +1,6 @@
 package com.example.randomlocks.notesapp;
 
 
-import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,12 +8,14 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,19 +32,25 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 
 public class AddNote extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener , DialogBackground.DialogListener {
-    static EditText Title, Description;
+    private static final int CAMERA_REQUEST = 1888;
+    TextInputLayout edit_title,edit_description;
+    EditText Title, Description;
     DatabaseAdapter adapter;
-
-    ImageButton submit;
-
-    StringBuilder filepath = new StringBuilder();
+    JSONObject json;
+    FloatingActionButton submit;
+ArrayList<String> image_paths;
     String color;
     private File imagefile;
     RelativeLayout layout;
@@ -55,6 +62,8 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
+        image_paths = new ArrayList<>();
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -63,9 +72,12 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
 
         Title = (EditText) findViewById(R.id.title);
         Description = (EditText) findViewById(R.id.descritpion);
-        submit = (ImageButton) findViewById(R.id.submit);
+        submit = (FloatingActionButton) findViewById(R.id.save);
+        edit_title = (TextInputLayout) findViewById(R.id.input_title);
+        edit_description = (TextInputLayout) findViewById(R.id.input_description);
         linearLayout = (LinearLayout) findViewById(R.id.layout);
         submit.setOnClickListener(this);
+
         layout = (RelativeLayout) findViewById(R.id.mylayout);
         color = String.valueOf(R.color.white);
 
@@ -73,7 +85,24 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
             it = getIntent();
             String title = it.getExtras().getString("TITLE");
             String description = it.getExtras().getString("DESCRIPTION");
-            filepath.append(it.getExtras().getString("FILE_PATH"));
+
+
+            json = new JSONObject(it.getExtras().getString("FILE_PATH"));
+            JSONArray jsonArray = json.optJSONArray("FILE_PATH");
+
+            if(jsonArray!=null){
+
+                for(int i=0;i<jsonArray.length();i++){
+                    image_paths.add(jsonArray.getString(i));
+
+                }
+
+            }
+
+
+
+
+
 
             layout.setFocusableInTouchMode(true);
             Title.setText(title);
@@ -81,23 +110,23 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
             color = it.getExtras().getString("COLOR");
             layout.setBackgroundColor(getResources().getColor(Integer.parseInt(color)));
 
-            String files[];
 
 
-            files = filepath.toString().split(" ");
-
-
-            for (int i = 0; i < files.length; i++) {
+            for (int i = 0; i < image_paths.size(); i++) {
 
 
                 ImageView imageView = new ImageView(this);
+                CardView cardView = new CardView(this);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                cardView.setLayoutParams(params);
+                cardView.setCardElevation(8);
+                cardView.setRadius(8);
                 params.leftMargin = 10;
                 imageView.setLayoutParams(params);
-                imageView.setTag(files[i]);
-                imageView.setImageBitmap(getThumbnail(getResources(), files[i], 100, 100));
-                linearLayout.addView(imageView);
-
+                imageView.setTag(image_paths.get(i));
+                imageView.setImageBitmap(getThumbnail(getResources(), image_paths.get(i), 100, 100));
+                linearLayout.addView(cardView);
+                cardView.addView(imageView);
                 imageView.setOnClickListener(new ImplementListenerClass());
 
 
@@ -169,6 +198,7 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
+
         long a;
         boolean flag = true;
         boolean b;
@@ -188,7 +218,7 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
 
 
         try {
-            it = getIntent();
+           it = getIntent();
             id = it.getExtras().getInt("ID");
 
             cursor = adapter.getGivenNote(id);
@@ -199,10 +229,14 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
                 Toast.makeText(this, String.valueOf(id), Toast.LENGTH_LONG).show();
 
 
+
+
                 if (Title.getText().toString().trim().length() == 0)
                     adapter.DeleteNote(id);
                 else {
-                    b = adapter.updateNote(id, Title.getText().toString(), Description.getText().toString(), color, filepath.toString());    //UPDATING NOTE
+                    json = new JSONObject();
+                    json.put("FILE_PATH",new JSONArray(image_paths));
+                    b = adapter.updateNote(id, Title.getText().toString(), Description.getText().toString(), color, json.toString());    //UPDATING NOTE
                     flag = false;
 
                     //     color="#FFFFFF";
@@ -217,10 +251,18 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
         //insert the column
         if (flag == true) {
             Toast.makeText(this, "Not coming here right for update?", Toast.LENGTH_LONG).show();
+          json = new JSONObject();
+            try {
+                json.put("FILE_PATH",new JSONArray(image_paths));
 
+            } catch (JSONException e) {
+                Toast.makeText(this,"no jason",Toast.LENGTH_SHORT).show();
+            }
 
             if (Title.getText().toString().trim().length() != 0)
-                a = adapter.InsertNote(Title.getText().toString(), Description.getText().toString(), color, filepath.toString());        //INSERTING NOTE
+                a = adapter.InsertNote(Title.getText().toString(), Description.getText().toString(), color, json.toString());        //INSERTING NOTE
+
+            Toast.makeText(this,json.toString(),Toast.LENGTH_SHORT).show();
 
             //   color="#FFFFFF";
             Intent it = new Intent(this, MainActivity.class);
@@ -282,13 +324,13 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String time = new SimpleDateFormat("yyyy-MM-dd_HHmmss").format(new Date());
         String imagename = "notes" + time;
-        imagefile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagename + ".png");
+        imagefile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagename + ".jpg");
 
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagefile));
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, 0);
+            startActivityForResult(intent, CAMERA_REQUEST);
         }
 
     } //function
@@ -296,21 +338,28 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0) {
+        if (requestCode == CAMERA_REQUEST) {
 
             switch (resultCode) {
 
                 case RESULT_OK:
 
                     if (imagefile.exists()) {
-                        filepath.append(imagefile.getAbsolutePath() + " ");
+                        image_paths.add(imagefile.getAbsolutePath());
+
                         ImageView imageView = new ImageView(this);
+                        CardView cardView = new CardView(this);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        cardView.setLayoutParams(params);
+                        cardView.setCardElevation(8);
+                        cardView.setRadius(8);
                         params.leftMargin = 10;
                         imageView.setLayoutParams(params);
                         imageView.setTag(imagefile.getAbsolutePath());
                         imageView.setImageBitmap(getThumbnail(getResources(), imagefile.getAbsolutePath(), 100, 100));
-                        linearLayout.addView(imageView);
+                        linearLayout.addView(cardView);
+                        cardView.addView(imageView);
+
 
                         imageView.setOnClickListener(new ImplementListenerClass());
 
@@ -345,6 +394,7 @@ public class AddNote extends AppCompatActivity implements View.OnClickListener, 
             String path = (String) v.getTag();
             Intent it = new Intent(AddNote.this, ImageViewer.class);
             it.putExtra("path", path);
+            it.putStringArrayListExtra("list",image_paths);
             startActivity(it);
 
             Toast.makeText(AddNote.this, path, Toast.LENGTH_SHORT).show();

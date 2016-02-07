@@ -3,13 +3,16 @@ package com.example.randomlocks.notesapp;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -17,17 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.support.v7.widget.SearchView;
-import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener , ListView.OnItemClickListener  {
@@ -35,7 +30,7 @@ FloatingActionButton ADD_NOTE;
    ArrayList<NoteList>  arrayList;
     DatabaseAdapter dbadapter;
     Cursor cursor;
-
+Toolbar toolbar;
     NoteAdapter adapter;
     ListView listView;
     @Override
@@ -45,7 +40,14 @@ FloatingActionButton ADD_NOTE;
       //  Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
      //   setSupportActionBar(myToolbar);
     listView= (ListView) findViewById(R.id.listView);
-ADD_NOTE=(FloatingActionButton)findViewById(R.id.button);
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+
+
+
+
+
+        ADD_NOTE=(FloatingActionButton)findViewById(R.id.button);
         ADD_NOTE.setOnClickListener(this);
 
 arrayList = new ArrayList<>();

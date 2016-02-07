@@ -8,7 +8,7 @@
     <item name="lightgreen" type="color">#d282ffa9</item>
     <item name="blue" type="color">#d241a8ff</item>
     <item name="white" type="color">#FFFFFF</item>
-
+<item name="floatingpointbutton" type="color">#FF5722</item>
    <item name="primary" type="color">#BA68C8</item>
    <item name="primarydark" type="color">#9C27B0</item>
 

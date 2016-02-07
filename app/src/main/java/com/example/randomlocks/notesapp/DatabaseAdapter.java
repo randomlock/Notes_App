@@ -43,7 +43,7 @@ Context context;
         return id;
     }
 
-    public int DeleteNote(int id)
+    public int DeleteNote(int id)               //Deleting the notes
     {
 
         SQLiteDatabase db = schema.getWritableDatabase();
@@ -110,14 +110,14 @@ public Cursor getAllNote()
     }
 
 
-    public String getColor(int id)
+  /*  public String getColor(int id)
     {
         SQLiteDatabase db = schema.getWritableDatabase();
         String column[] = {DatabaseScehma.COLOR};
 
        return db.query(DatabaseScehma.TABLE_NAME,column,DatabaseScehma.ID+"="+id,null,null,null,null).getString(4);
 
-    }
+    } */
 
 
 
