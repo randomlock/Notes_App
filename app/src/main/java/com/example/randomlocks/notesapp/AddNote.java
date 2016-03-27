@@ -1,7 +1,6 @@
 package com.example.randomlocks.notesapp;
 
 
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -22,12 +21,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.randomlocks.notesapp.PictureHelper.ImageViewer;
+import com.example.randomlocks.notesapp.adapter.DatabaseAdapter;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -43,8 +43,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class AddNote extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener , DialogBackground.DialogListener {
+public class AddNote extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener  {
     private static final int CAMERA_REQUEST = 1888;
+    private static final String COLOR_KEY = "color_key";
     TextInputLayout edit_title,edit_description;
     EditText Title, Description;
     DatabaseAdapter adapter;
@@ -55,7 +56,7 @@ ArrayList<String> image_paths;
     private File imagefile;
     RelativeLayout layout;
     LinearLayout linearLayout;
-    int id;
+    Long id;
     Intent it;
 
     @Override
@@ -73,6 +74,7 @@ ArrayList<String> image_paths;
         Title = (EditText) findViewById(R.id.title);
         Description = (EditText) findViewById(R.id.descritpion);
         submit = (FloatingActionButton) findViewById(R.id.save);
+        submit.show();
         edit_title = (TextInputLayout) findViewById(R.id.input_title);
         edit_description = (TextInputLayout) findViewById(R.id.input_description);
         linearLayout = (LinearLayout) findViewById(R.id.layout);
@@ -142,7 +144,7 @@ ArrayList<String> image_paths;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.notelistmenu, menu);
+        getMenuInflater().inflate(R.menu.menu_add_note_fragment, menu);
         return true;
     }
 
@@ -154,9 +156,9 @@ ArrayList<String> image_paths;
 
         switch (item.getItemId()) {
             case R.id.background:
-                FragmentManager manager = getFragmentManager();
-                DialogBackground dialog = new DialogBackground();
-                dialog.show(manager, "mydialog");
+
+                ColorPickerFragment dialog = new ColorPickerFragment();
+                dialog.show(getSupportFragmentManager(), "mydialog");
 
 
                 return true;
@@ -196,6 +198,7 @@ ArrayList<String> image_paths;
     }
 
 
+
     @Override
     public void onClick(View v) {
 
@@ -219,7 +222,7 @@ ArrayList<String> image_paths;
 
         try {
            it = getIntent();
-            id = it.getExtras().getInt("ID");
+            id = it.getExtras().getLong("ID");
 
             cursor = adapter.getGivenNote(id);
             cursor.moveToFirst();
@@ -232,11 +235,11 @@ ArrayList<String> image_paths;
 
 
                 if (Title.getText().toString().trim().length() == 0)
-                    adapter.DeleteNote(id);
+                    adapter.deleteNote(id);
                 else {
                     json = new JSONObject();
                     json.put("FILE_PATH",new JSONArray(image_paths));
-                    b = adapter.updateNote(id, Title.getText().toString(), Description.getText().toString(), color, json.toString());    //UPDATING NOTE
+                    b = adapter.updateNote(id, Title.getText().toString(), Description.getText().toString(), Integer.parseInt(color), json.toString());    //UPDATING NOTE
                     flag = false;
 
                     //     color="#FFFFFF";
@@ -260,7 +263,7 @@ ArrayList<String> image_paths;
             }
 
             if (Title.getText().toString().trim().length() != 0)
-                a = adapter.InsertNote(Title.getText().toString(), Description.getText().toString(), color, json.toString());        //INSERTING NOTE
+                a = adapter.insertNote(Title.getText().toString(), Description.getText().toString(), Integer.parseInt(color), json.toString());        //INSERTING NOTE
 
             Toast.makeText(this,json.toString(),Toast.LENGTH_SHORT).show();
 
@@ -382,17 +385,17 @@ ArrayList<String> image_paths;
         }
     }
 
-    @Override
+ /*   @Override
     public void colorPicker(String color) {
         layout.setBackgroundColor(getResources().getColor(Integer.parseInt(color)));
         this.color=color;
-    }
+    } */
 
     private class ImplementListenerClass implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             String path = (String) v.getTag();
-            Intent it = new Intent(AddNote.this, ImageViewer.class);
+            Intent it = new Intent(AddNote.this,ImageViewer.class);
             it.putExtra("path", path);
             it.putStringArrayListExtra("list",image_paths);
             startActivity(it);

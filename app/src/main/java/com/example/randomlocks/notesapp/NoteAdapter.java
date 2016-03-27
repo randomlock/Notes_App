@@ -10,13 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.randomlocks.notesapp.adapter.DatabaseAdapter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Created by randomlocks on 10/12/2015.
@@ -29,12 +30,12 @@ Context context;
     Date date1obj,date2obj;
 
 
-    ArrayList<NoteList> arrayList;
+    ArrayList<NoteListModal> arrayList;
     private SparseBooleanArray mSelectedItemsIds;
 DatabaseAdapter db;
 
-    public NoteAdapter(Context context,ArrayList<NoteList> arrayList) {
-        super(context, R.layout.customlayout,arrayList);
+    public NoteAdapter(Context context,ArrayList<NoteListModal> arrayList) {
+        super(context, R.layout.custom_layout_list,arrayList);
         this.context=context;
         mSelectedItemsIds = new SparseBooleanArray();
        // Toast.makeText(context,"in constructor",Toast.LENGTH_LONG).show();
@@ -50,14 +51,14 @@ this.arrayList=arrayList;
         if(v==null)
         {
             LayoutInflater l=LayoutInflater.from(getContext());
-            v = l.inflate(R.layout.customlayout, parent, false);
+            v = l.inflate(R.layout.custom_layout_list, parent, false);
         }
 
-NoteList list = arrayList.get(position);
+NoteListModal list = arrayList.get(position);
 db=new DatabaseAdapter(context);
-        Title= (TextView) v.findViewById(R.id.hello);
+        Title= (TextView) v.findViewById(R.id.listviewTitle);
         Title.setText(list.getTitle());
-        Date_NOW=(TextView)v.findViewById(R.id.date);
+        Date_NOW=(TextView)v.findViewById(R.id.listviewDate);
        date1=list.getTime();
         date2 = db.getDateTime();
 
@@ -86,12 +87,12 @@ db=new DatabaseAdapter(context);
 
 
 
-    public void remove(NoteList object) {
+    public void remove(NoteListModal object) {
         arrayList.remove(object);
         notifyDataSetChanged();
     }
 
-    public List<NoteList> getMyList()
+    public List<NoteListModal> getMyList()
     {
         return arrayList;
     }

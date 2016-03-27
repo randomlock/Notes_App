@@ -45,9 +45,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
-
+android:inputType="textCapSentences"
         android:hint="Title"
-
         android:textSize="20sp"
         android:padding="10dp"
         android:maxLength="50"
@@ -87,6 +86,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+
         android:inputType="textMultiLine"
         android:ems="10"
         android:padding="10dp"
@@ -102,7 +103,7 @@
         android:scrollHorizontally="false"
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:text="B" />
+         />
 
     </android.support.design.widget.TextInputLayout>
 

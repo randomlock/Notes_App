@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+
+
+
+
+
+
+
+    <item android:id="@+id/editor"
+        android:title="Open text editor"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_mode_edit_black_24dp"
+        android:showAsAction="always"
+        />
+
+    <item android:id="@+id/background"
+        android:title="change background"
+        android:icon="@drawable/colordropper"
+        yourapp:showAsAction="always" />
+
+    <item android:id="@+id/reminder"
+        android:title="set reminder"
+        android:icon="@drawable/icalarm"
+        yourapp:showAsAction="always" />
+
+
+    <item android:id="@+id/camera"
+        android:title="add images"
+        android:icon="@drawable/ic_photo_camera_black_24dp"
+        yourapp:showAsAction="always" />
+
+
+
+
+
+</menu>

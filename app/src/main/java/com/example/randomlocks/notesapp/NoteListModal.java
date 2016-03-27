@@ -3,7 +3,7 @@ package com.example.randomlocks.notesapp;
 /**
  * Created by randomlocks on 10/12/2015.
  */
-public class NoteList {
+public class NoteListModal {
 
    private int primary_key;
    private String Title;
@@ -16,7 +16,7 @@ public class NoteList {
         return color;
     }
 
-    public NoteList(int key,String title, String description,String CurrentDate,String color,String filespath) {
+    public NoteListModal(int key, String title, String description, String CurrentDate, String color, String filespath) {
         primary_key=key;
         Title = title;
         Description = description;

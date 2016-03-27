@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="?android:attr/activatedBackgroundIndicator"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:gravity="start"
+        android:paddingBottom="15dp"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:id="@+id/listviewTitle"
+        android:textColor="@color/textcolorprimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmallInverse"
+        android:text="@string/date"
+        android:textColor="@color/accent"
+        android:padding="3dp"
+        android:gravity="center"
+        android:id="@+id/listviewDate"
+        android:layout_below="@+id/listviewTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/textcolorsecondary"
+        android:id="@+id/listviewDescription"
+        android:ellipsize="end"
+        android:minLines="2"
+        android:maxLines="2"
+        android:padding="4dp"
+        android:textSize="14sp"
+        android:layout_alignTop="@+id/listviewDate"
+        android:layout_toEndOf="@+id/listviewDate"
+        android:layout_toRightOf="@+id/listviewDate"
+        />
+
+
+</RelativeLayout>

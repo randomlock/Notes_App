@@ -1,4 +1,4 @@
-package com.example.randomlocks.notesapp;
+package com.example.randomlocks.notesapp.adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,13 +29,14 @@ Context context;
     }
 
     //Function To Insert Notes into Database;
-    public long InsertNote(String title ,String Description,String color,String path)
+    public long insertNote(String title ,String Description,int color,String path)
     {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseScehma.TITLE,title);
         cv.put(DatabaseScehma.DESCRIPTION, Description);
         cv.put(DatabaseScehma.CURRENT_DATE,getDateTime());
         cv.put(DatabaseScehma.COLOR,color);
+        cv.put(DatabaseScehma.CURRENT_DATE,System.currentTimeMillis());
         cv.put(DatabaseScehma.FILE_PATH,path);
 
         SQLiteDatabase db=schema.getWritableDatabase();
@@ -43,12 +44,12 @@ Context context;
         return id;
     }
 
-    public int DeleteNote(int id)               //Deleting the notes
+    public int deleteNote(Long id)               //Deleting the notes
     {
 
         SQLiteDatabase db = schema.getWritableDatabase();
 
-        int row = db.delete(DatabaseScehma.TABLE_NAME, DatabaseScehma.ID+"="+id, null);
+        int row = db.delete(DatabaseScehma.TABLE_NAME, DatabaseScehma.ID + "=" + id, null);
 
 
 
@@ -63,25 +64,49 @@ public Cursor getAllNote()
    SQLiteDatabase db = schema.getWritableDatabase();
     String columns[] = {
       DatabaseScehma.ID,DatabaseScehma.TITLE,DatabaseScehma.DESCRIPTION,DatabaseScehma.CURRENT_DATE,DatabaseScehma.COLOR,DatabaseScehma.FILE_PATH};
-    Cursor cursor = db.query(DatabaseScehma.TABLE_NAME,columns,null,null,null,null,DatabaseScehma.CURRENT_DATE +" DESC");
+    Cursor cursor = db.query(DatabaseScehma.TABLE_NAME, columns, null, null, null, null, DatabaseScehma.CURRENT_DATE + " DESC");
 
+        if(cursor!=null)
+            cursor.moveToFirst();
 
     return cursor;
 
 }
 //Function to fetch a given note
-    public Cursor getGivenNote(int rowId)
+    public Cursor getGivenNote(Long rowId)
     {
          SQLiteDatabase db = schema.getWritableDatabase();
         String columns[] = {
                 DatabaseScehma.ID,DatabaseScehma.TITLE,DatabaseScehma.DESCRIPTION,DatabaseScehma.CURRENT_DATE,DatabaseScehma.COLOR,DatabaseScehma.FILE_PATH};
-        return db.query(DatabaseScehma.TABLE_NAME,columns,DatabaseScehma.ID+"="+rowId,null,null,null,null);
+        Cursor cursor= db.query(DatabaseScehma.TABLE_NAME,columns,DatabaseScehma.ID+"="+rowId,null,null,null,null);
+
+        if(cursor!=null)
+            cursor.moveToFirst();
+
+        return cursor;
 
     }
 
+    public Cursor getAllNode(String sequence){
+
+        SQLiteDatabase db = schema.getWritableDatabase();
+        String columns[] = {
+                DatabaseScehma.ID,DatabaseScehma.TITLE,DatabaseScehma.DESCRIPTION,DatabaseScehma.CURRENT_DATE,DatabaseScehma.COLOR,DatabaseScehma.FILE_PATH};
+
+        String where = DatabaseScehma.TITLE+" LIKE ? OR "+DatabaseScehma.DESCRIPTION+" LIKE ?";
+
+        Cursor cursor = db.query(false,DatabaseScehma.TABLE_NAME,columns,where,new String[]{"%"+sequence+"%","%"+sequence+"%"},null,null,null,null);
+
+        if(cursor!=null)
+            cursor.moveToFirst();
+
+        return cursor;
+    }
+
+
     //function to update a note
 
-    public boolean updateNote(int rowId,String title , String description,String color,String path)
+    public boolean updateNote(Long rowId,String title , String description,int color,String path)
     {
         SQLiteDatabase db = schema.getWritableDatabase();
         String columns[] = {
@@ -89,14 +114,16 @@ public Cursor getAllNote()
         ContentValues cv = new ContentValues();
         cv.put(DatabaseScehma.TITLE,title);
         cv.put(DatabaseScehma.DESCRIPTION, description);
-        cv.put(DatabaseScehma.CURRENT_DATE, getDateTime());
+        cv.put(DatabaseScehma.CURRENT_DATE,System.currentTimeMillis());
         cv.put(DatabaseScehma.COLOR, color);
         cv.put(DatabaseScehma.FILE_PATH,path);
 
-       return db.update(DatabaseScehma.TABLE_NAME,cv,DatabaseScehma.ID+"="+rowId,null )>0;
+        return db.update(DatabaseScehma.TABLE_NAME,cv,DatabaseScehma.ID+"="+rowId,null )>0;
 
 
     }
+
+
 
 
 
@@ -110,7 +137,7 @@ public Cursor getAllNote()
     }
 
 
-  /*  public String getColor(int id)
+    /*  public String getColor(int id)
     {
         SQLiteDatabase db = schema.getWritableDatabase();
         String column[] = {DatabaseScehma.COLOR};
@@ -124,15 +151,15 @@ public Cursor getAllNote()
     class DatabaseScehma extends SQLiteOpenHelper
     {
         private static final String DATABASE_NAME = "Abdullah";
-       private static final int DATABASE_VERSION=52;
-       private static final String TABLE_NAME="Notes";
-        private static final String ID = "id";
+        private static final int DATABASE_VERSION=65;
+        private static final String TABLE_NAME="Notes";
+        private static final String ID = "_id";
         private  static final String TITLE = "title";
         private  static final String CURRENT_DATE="currentdate";
         private static final String FILE_PATH="path";
         private static final String COLOR="color";
         private  static final String DESCRIPTION = "description";
-        private  static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+ "( "+ID+" integer primary key autoincrement , "+TITLE+" varchar(50)   , "+DESCRIPTION+" varchar(255) , "+CURRENT_DATE+" DATETIME DEFAULT CURRENT_TIMESTAMP , "+COLOR+" varchar(50) , "+FILE_PATH+" varchar(255) );";
+        private  static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+ "( "+ID+" integer primary key autoincrement , "+TITLE+" varchar(50)   , "+DESCRIPTION+" varchar(255) , "+CURRENT_DATE+" int , "+COLOR+" int , "+FILE_PATH+" varchar(255) );";
         private static final String DELETE_TABLE = "DROP TABLE IF EXISTS "+TABLE_NAME;
 
 

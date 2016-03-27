@@ -2,15 +2,20 @@
 <resources>
 
 
- <item name="purple" type="color">#ff8836ff</item>
-    <item name="pink" type="color">#ffff71e3</item>
-    <item name="orange" type="color">#ffff6152</item>
-    <item name="lightgreen" type="color">#d282ffa9</item>
+ <item name="purple" type="color">#9E9E9E</item>
+    <item name="pink" type="color">#455A64</item>
+    <item name="orange" type="color">#039BE5</item>
+    <item name="lightgreen" type="color">#3D51B3</item>
     <item name="blue" type="color">#d241a8ff</item>
     <item name="white" type="color">#FFFFFF</item>
 <item name="floatingpointbutton" type="color">#FF5722</item>
-   <item name="primary" type="color">#BA68C8</item>
-   <item name="primarydark" type="color">#9C27B0</item>
+   <item name="primary" type="color">#2196F3</item>
+   <item name="primarydark" type="color">#303f9f</item>
+   <item name="accent" type="color">#ff4081</item>
+<item name="lightaccent" type="color">#F8BBD0</item>
 
+   <item name="dividercolor" type="color">#B6B6B6</item>
+   <item name="textcolorprimary" type="color">#212121</item>
+   <item name="textcolorsecondary" type="color">#727272</item>
 
 </resources>

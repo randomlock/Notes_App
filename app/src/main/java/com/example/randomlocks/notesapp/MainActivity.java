@@ -1,149 +1,96 @@
 package com.example.randomlocks.notesapp;
 
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.os.Build;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.example.randomlocks.notesapp.fragments.AddNoteFragment;
+import com.example.randomlocks.notesapp.fragments.ConfirmationDialog;
+import com.example.randomlocks.notesapp.fragments.NoteGridFragment;
+import com.example.randomlocks.notesapp.fragments.NoteListFragment;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener , ListView.OnItemClickListener  {
-FloatingActionButton ADD_NOTE;
-   ArrayList<NoteList>  arrayList;
-    DatabaseAdapter dbadapter;
-    Cursor cursor;
-Toolbar toolbar;
-    NoteAdapter adapter;
-    ListView listView;
+public class MainActivity extends AppCompatActivity implements NoteListFragment.CommunicationInterface , AddNoteFragment.AddNoteInterface ,NoteGridFragment.CommunicationInterface {
+
+    private static final String DEFAULT_TITLE = "All Notes" ;
+    int layout = R.layout.fragment_note_list ;
+    Toolbar toolbar;
+   public static int flag = 0;
+    public String mtitle;
+    int mselectedId;
+    public static final String KEY = "NAViGATION_SELECTED_ID"; //FOR SAVING MENU ITEM
+    public static final String TITLE = "NAVIGATION_SELECTED_TITLE"; //FOR MENU TOOLBAR TITLE
+    DrawerLayout mDrawer;
+    NavigationView mNavigationView;
+    ActionBarDrawerToggle mActionBarToggle;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      //  Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-     //   setSupportActionBar(myToolbar);
-    listView= (ListView) findViewById(R.id.listView);
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
+
+     //   mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+      //  mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+
+        //   listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+
+
+        Fragment fragment =getSupportFragmentManager().findFragmentByTag("NOTE_LIST");
+
+        if(fragment==null)
+            fragment = getSupportFragmentManager().findFragmentByTag("NOTE_GRID");
 
 
 
+if(fragment==null){
+    NoteListFragment noteListFragment = new NoteListFragment();
+    getSupportFragmentManager().beginTransaction()
+            .add(R.id.layout, noteListFragment, "NOTE_LIST")
+            .addToBackStack(null)
+            .commit();
+}
 
+     /*   mActionBarToggle = setupDrawerToggle();
+        mDrawer.addDrawerListener(mActionBarToggle);
 
-        ADD_NOTE=(FloatingActionButton)findViewById(R.id.button);
-        ADD_NOTE.setOnClickListener(this);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
-arrayList = new ArrayList<>();
-       dbadapter = new DatabaseAdapter(this);
-        cursor=dbadapter.getAllNote();
-
-        while (cursor.moveToNext())
-        {
-            arrayList.add(new NoteList(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5)));
-
-        }
-
-adapter = new NoteAdapter(this,arrayList);
-
-
-
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(this);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-                // Capture total checked items
-                final int checkedCount = listView.getCheckedItemCount();
-                // Set the CAB title according to total checked items
-                mode.setTitle(checkedCount + " Selected");
-
-                // Calls toggleSelection method from ListViewAdapter Class
-                adapter.toggleSelection(position);
-
-            }
-
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-
-
-                mode.getMenuInflater().inflate(R.menu.menubardelete, menu);
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.delete:
-                        SparseBooleanArray selected = adapter.getSelectedIds();
-                        for (int i = (selected.size() - 1); i >= 0; i--) {
-                            if (selected.valueAt(i)) {
-                                NoteList selecteditem = (NoteList) adapter.getItem(selected.keyAt(i));
-
-                                // Remove selected items following the ids
-                                adapter.remove(selecteditem);
-                                int id=selected.keyAt(i);
-                                dbadapter.DeleteNote(selecteditem.getPrimary_key());
-
-                            }
-                        }
-
-                        mode.finish();
-                        return true;
-
-                    case  R.id.selectAll :
-                        for ( int i=0; i < adapter.getCount(); i++) {
-                            listView.setItemChecked(i, true);
-                        }
-                        return true;
-
-
-
-                    default:
-                        return false;
-                }
-
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-             adapter.removeSelection();
-            }
-        });
-
-
-
-
-
-
+        mselectedId = savedInstanceState == null ? R.id.all_Notes : savedInstanceState.getInt(KEY);
+        mtitle = savedInstanceState == null ? DEFAULT_TITLE : savedInstanceState.getString(TITLE);
+        selectDrawerItem(mselectedId, mtitle); */
 
 
     }
 
-    @Override
+
+
+
+
+    public ActionBarDrawerToggle setupDrawerToggle() {
+        return  new ActionBarDrawerToggle(this, mDrawer, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+
+
+    /*  @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -151,7 +98,7 @@ adapter = new NoteAdapter(this,arrayList);
         SearchManager manager= (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(manager.getSearchableInfo(new ComponentName(getApplicationContext(),MainActivity.class)));
-      //  searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        //  searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
         searchView.setQueryHint("Search Notes");
 
 
@@ -172,9 +119,59 @@ adapter = new NoteAdapter(this,arrayList);
         }
 
         return super.onOptionsItemSelected(item);
+    } */
+
+
+    //when add note
+
+    @Override
+    public void onClick() {
+
+       flag=0;
+        populateDB(null);
+
+
+    }
+
+//when editing note
+
+    @Override
+    public void OnItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+      flag=1;
+        populateDB(id);
     }
 
     @Override
+    public void layoutChange(int layout_id) {
+
+
+      //  FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+
+
+      /*  if(layout_id==R.layout.fragment_note_list){
+            layout = R.layout.fragment_note_grid;
+            replace(new NoteGridFragment(),"NOTE_GRID");
+
+        }
+
+
+        else
+            replace(new NoteListFragment(),"NOTE_LIST"); */
+
+    }
+
+    private void replace(Fragment fragment,String tag) {
+
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.layout,fragment,tag)
+                .commit();
+
+    }
+
+/*    @Override
     public void onClick(View v) {
 
 
@@ -211,7 +208,145 @@ dbadapter = new DatabaseAdapter(this);
         startActivity(it);
 
 
+    } */
+
+
+    public void populateDB(Long id){
+
+        AddNoteFragment fragment = new AddNoteFragment();
+        fragment.fillRowId(id);
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.layout, fragment, "ADD_NOTE")
+                .commit();
+
     }
+
+    @Override  //save the notes and go to listview/gridview
+    public void replace() {
+        Fragment fragment ;
+
+        if(layout == R.layout.fragment_note_list){
+            fragment = new NoteListFragment();
+
+        }
+        else
+        fragment = new NoteListFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.layout,fragment)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("ADD_NOTE");
+
+        if(fragment!=null && flag==0){
+
+            ConfirmationDialog dialogImageSelect = new ConfirmationDialog();
+            dialogImageSelect.show(getSupportFragmentManager(),"dialog");
+
+        }
+
+
+
+        else {
+
+            super.onBackPressed();
+        }
+
+
+
+
+    }
+
+
+    private void selectDrawerItem(int mselectedId, String title) {
+
+        switch (mselectedId){
+
+            case R.id.all_Notes :
+                FragmentTransactionHelper("replace",new NoteListFragment(),"GamesHome");
+                break;
+
+            case R.id.starred_notes :
+                Toast.makeText(this,"starred notes",Toast.LENGTH_SHORT).show();
+                FragmentTransactionHelper("replace",new NoteListFragment(),"GamesList");
+                break;
+
+            case R.id.Trash :
+                Toast.makeText(this,"trash notes",Toast.LENGTH_SHORT).show();
+                FragmentTransactionHelper("replace", new NoteListFragment(), "GamesNews");
+                break;
+
+            case R.id.private_notes :
+                Toast.makeText(this,"Private Notes",Toast.LENGTH_SHORT).show();
+                FragmentTransactionHelper("replace", new NoteListFragment(), "GamesNews");
+                break;
+
+
+
+            default:
+                Toast.makeText(this,"default",Toast.LENGTH_SHORT).show();
+
+        }
+
+        setTitle(title);
+        mDrawer.closeDrawer(GravityCompat.START);
+
+
+
+    }
+
+
+
+    private void FragmentTransactionHelper(String operation,Fragment fragment,String tag) {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        if(operation.equals("replace")){
+            fragmentManager.popBackStack();
+            ft.add(R.id.layout, fragment, tag);
+            ft.addToBackStack(null);
+
+        }
+
+        else if(operation.equals("add")){
+            ft.add(R.id.layout,fragment,tag);
+            ft.addToBackStack(null);
+
+        }
+
+        else if(operation.equals("remove")){
+
+            //TODO
+
+
+        }
+
+        ft.commit();
+
+    }
+
+
+
+
+
+
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY, mselectedId);
+        outState.putString(TITLE, mtitle);
+    }
+
+
+
+
+
 
 
 
