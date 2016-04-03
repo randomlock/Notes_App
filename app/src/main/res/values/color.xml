@@ -2,16 +2,22 @@
 <resources>
 
 
- <item name="purple" type="color">#9E9E9E</item>
-    <item name="pink" type="color">#455A64</item>
-    <item name="orange" type="color">#039BE5</item>
-    <item name="lightgreen" type="color">#3D51B3</item>
-    <item name="blue" type="color">#d241a8ff</item>
-    <item name="white" type="color">#FFFFFF</item>
+ <item name="color1" type="color">#ffffff</item>
+    <item name="color2" type="color">#80DEEA</item>
+    <item name="color3" type="color">#80CBC4</item>
+    <item name="color4" type="color">#E6EE9C</item>
+    <item name="color5" type="color">#FFCC80</item>
+   <item name="color6" type="color">#81D4FA</item>
+   <item name="color7" type="color">#F48FB1</item>
+   <item name="color8" type="color">#CE93D8</item>
+   <item name="color9" type="color">#9FA8DA</item>
+<item name="searchViewColor" type="color">#FCE4EC</item>
+   <item name="white" type="color">#FFFFFF</item>
 <item name="floatingpointbutton" type="color">#FF5722</item>
    <item name="primary" type="color">#2196F3</item>
-   <item name="primarydark" type="color">#303f9f</item>
+   <item name="primarydark" type="color">#1976D2</item>
    <item name="accent" type="color">#ff4081</item>
+    <item name="datecolor" type="color">#FF80AB</item>
 <item name="lightaccent" type="color">#F8BBD0</item>
 
    <item name="dividercolor" type="color">#B6B6B6</item>

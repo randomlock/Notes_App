@@ -12,6 +12,7 @@
 
 
 
+
     </style>
 
     <style name="Apptheme2" parent="Theme.AppCompat.Light.NoActionBar">
@@ -24,11 +25,24 @@
 
     </style>
 
+
+
+
+
     <style name="CMOptionsMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="android:popupBackground">@color/white</item>
         <item name="android:textColor">@color/black</item>
+
+
     </style>
 
+    <style name="toolbartheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="searchViewStyle">@style/CustomSearchView</item>
+    </style>
+
+    <style name="toolbartheme2" parent="ThemeOverlay.AppCompat.Light">
+        <item name="searchViewStyle">@style/CustomSearchView</item>
+    </style>
 
     <color name="black">#000000</color>
 
@@ -37,17 +51,43 @@
 
 
 
+<style name="fabStyle">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:clickable">true</item>
+</style>
 
 
 
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView.ActionBar">
+        <item name="queryHint">@string/search_hint</item>
+    </style>
 
 
+   <!-- styling dialog -->
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--item RadioButton or CheckBox color-->
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@color/accent</item>
+        <!--item text color-->
+        <item name="textColorAlertDialogListItem">@color/white</item>
+        <!--buttons color-->
+        <item name="colorAccent">@color/accent</item>
+        <!--title and message color-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <!--dialog background-->
+        <item name="android:windowBackground">@color/primary</item>
 
 
+<item name="android:listSelector">@color/accent</item>
+    </style>
 
 
-
-
+    <style name="DialogStyle" parent="Base.Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">97%</item>
+        <item name="android:windowMinWidthMinor">97%</item>
+    </style>
 
 
 

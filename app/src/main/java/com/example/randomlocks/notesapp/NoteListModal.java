@@ -5,24 +5,20 @@ package com.example.randomlocks.notesapp;
  */
 public class NoteListModal {
 
-   private int primary_key;
+
    private String Title;
      private  String Description;
-  private   String CurrentDate;
-    private  String color;
+  private   long CurrentDate;
+    private  int color;
     private String filespath;
+    private long lastEdited;
 
-    public String getColor() {
-        return color;
-    }
-
-    public NoteListModal(int key, String title, String description, String CurrentDate, String color, String filespath) {
-        primary_key=key;
+    public NoteListModal(String title, String description, int color, String filespath) {
         Title = title;
         Description = description;
-        this.CurrentDate=CurrentDate;
         this.color=color;
         this.filespath=filespath;
+
 
 
     }
@@ -31,18 +27,32 @@ public class NoteListModal {
         return filespath;
     }
 
-
-
-    public int getPrimary_key() {
-        return primary_key;
+    public long getLastEdited() {
+        return lastEdited;
     }
+
+    public long getCurrentDate() {
+        return CurrentDate;
+    }
+
+    public void setLastEdited(long lastEdited) {
+        this.lastEdited = lastEdited;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+
+
+
 
     @Override
     public String toString() {
         return Title;
     }
 
-    public String getTime() {
+    public long getTime() {
         return CurrentDate;
     }
 

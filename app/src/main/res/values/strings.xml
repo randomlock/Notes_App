@@ -20,4 +20,14 @@
     <string name="view">Change View</string>
     <string name="drawer_open">Open Navigation Menu</string>
     <string name="drawer_close">Close Navigation Menu</string>
+    <string name="sort">Sort By</string>
+
+
+    <string-array name="sort_array">
+
+        <item>"Title"</item>
+        <item>"Date Created"</item>
+        <item>"Last Modified"</item>
+    </string-array>
+
 </resources>

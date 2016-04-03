@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.randomlocks.notesapp.PictureHelper.ImageViewer;
 import com.example.randomlocks.notesapp.adapter.DatabaseAdapter;
+import com.example.randomlocks.notesapp.fragments.ColorPickerFragment;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -239,7 +240,7 @@ ArrayList<String> image_paths;
                 else {
                     json = new JSONObject();
                     json.put("FILE_PATH",new JSONArray(image_paths));
-                    b = adapter.updateNote(id, Title.getText().toString(), Description.getText().toString(), Integer.parseInt(color), json.toString());    //UPDATING NOTE
+                //    b = adapter.updateNote(id, Title.getText().toString(), Description.getText().toString(), Integer.parseInt(color), json.toString());    //UPDATING NOTE
                     flag = false;
 
                     //     color="#FFFFFF";
@@ -252,7 +253,7 @@ ArrayList<String> image_paths;
         }
 
         //insert the column
-        if (flag == true) {
+        if (flag) {
             Toast.makeText(this, "Not coming here right for update?", Toast.LENGTH_LONG).show();
           json = new JSONObject();
             try {
@@ -263,7 +264,7 @@ ArrayList<String> image_paths;
             }
 
             if (Title.getText().toString().trim().length() != 0)
-                a = adapter.insertNote(Title.getText().toString(), Description.getText().toString(), Integer.parseInt(color), json.toString());        //INSERTING NOTE
+     //           a = adapter.insertNote(Title.getText().toString(), Description.getText().toString(), Integer.parseInt(color), json.toString());        //INSERTING NOTE
 
             Toast.makeText(this,json.toString(),Toast.LENGTH_SHORT).show();
 

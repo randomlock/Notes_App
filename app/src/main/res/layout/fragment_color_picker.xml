@@ -1,68 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:layout_margin="15dp"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:rowCount="3"
+    android:layout_gravity="center"
+    android:columnCount="3"
     >
 
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color1"
 
-    <ImageButton
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/lightgreen"
-        android:layout_weight="1"
-        android:layout_margin="5dp"
-        android:src="@drawable/addnotebutton"
-        android:id="@+id/lightgreen"
-       />
+        app:backgroundTint="@color/color1"
+        android:layout_row="0"
+        android:layout_column="0" />
 
-    <ImageButton
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/addnotebutton"
-        android:background="@color/blue"
-        android:layout_weight="1"
-        android:layout_margin="5dp"
-        android:id="@+id/blue"
-       />
 
-    <ImageButton
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/addnotebutton"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-android:background="@color/orange"
-        android:id="@+id/orange"
+
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color2"
+        app:backgroundTint="@color/color2"
+        android:layout_row="0"
+        android:layout_column="1" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color3"
+        app:backgroundTint="@color/color3"
+        android:layout_row="0"
+        android:layout_column="2" />
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color4"
+        app:backgroundTint="@color/color4"
+        android:layout_row="1"
+        android:layout_column="0" />
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color5"
+        app:backgroundTint="@color/color5"
+        android:layout_row="1"
+        android:layout_column="1" />
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color6"
+        app:backgroundTint="@color/color6"
+        android:layout_row="1"
+        android:layout_column="2" />
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color7"
+        app:backgroundTint="@color/color7"
+        android:layout_row="2"
+        android:layout_column="0"
         />
 
-    <ImageButton
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="5dp"
-        android:background="@color/pink"
-        android:src="@drawable/addnotebutton"
-        android:id="@+id/pink"
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color8"
+        app:backgroundTint="@color/color8"
+        android:layout_row="2"
+        android:layout_column="1"
         />
 
-    <ImageButton
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:src="@drawable/addnotebutton"
-android:layout_weight="1"
-        android:layout_margin="5dp"
-        android:background="@color/purple"
-        android:id="@+id/purple"
-       />
+    <android.support.design.widget.FloatingActionButton
+        style="@style/fabStyle"
+        android:id="@+id/color9"
+        app:backgroundTint="@color/color9"
+        android:layout_row="2"
+        android:layout_column="2"
+        />
 
 
 
 
 
-</LinearLayout>
+
+</GridLayout>

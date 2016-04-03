@@ -59,7 +59,7 @@ db=new DatabaseAdapter(context);
         Title= (TextView) v.findViewById(R.id.listviewTitle);
         Title.setText(list.getTitle());
         Date_NOW=(TextView)v.findViewById(R.id.listviewDate);
-       date1=list.getTime();
+    //   date1=list.getTime();
         date2 = db.getDateTime();
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm", Locale.ENGLISH);

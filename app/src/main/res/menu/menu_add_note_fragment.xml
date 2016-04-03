@@ -1,5 +1,9 @@
+<!-- change icon to grey color -->
+
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto"
+   >
 
 
 
@@ -8,15 +12,15 @@
 
 
     <item android:id="@+id/editor"
-        android:title="Open text editor"
+        android:title="Open editor"
         android:orderInCategory="2"
         android:icon="@drawable/ic_mode_edit_black_24dp"
-        android:showAsAction="always"
+        yourapp:showAsAction="always"
         />
 
     <item android:id="@+id/background"
         android:title="change background"
-        android:icon="@drawable/colordropper"
+        android:icon="@drawable/ic_color_lens_black_24dp"
         yourapp:showAsAction="always" />
 
     <item android:id="@+id/reminder"

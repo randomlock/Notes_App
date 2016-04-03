@@ -24,9 +24,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse"
+        android:textSize="12sp"
         android:text="@string/date"
-        android:textColor="@color/accent"
+        android:textColor="@color/datecolor"
         android:padding="3dp"
         android:gravity="center"
         android:id="@+id/listviewDate"
