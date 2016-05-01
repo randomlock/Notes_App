@@ -31,13 +31,6 @@ public class NoteListModal {
         return lastEdited;
     }
 
-    public long getCurrentDate() {
-        return CurrentDate;
-    }
-
-    public void setLastEdited(long lastEdited) {
-        this.lastEdited = lastEdited;
-    }
 
     public int getColor() {
         return color;
@@ -52,9 +45,7 @@ public class NoteListModal {
         return Title;
     }
 
-    public long getTime() {
-        return CurrentDate;
-    }
+
 
     public String getTitle() {
         return Title;

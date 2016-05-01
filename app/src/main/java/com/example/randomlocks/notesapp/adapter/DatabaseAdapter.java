@@ -63,7 +63,13 @@ public Cursor getAllNote(int sortBy)
 
     String sortByColumn;
     String columns[] = {
-      DatabaseScehma.ID,DatabaseScehma.TITLE,DatabaseScehma.DESCRIPTION,DatabaseScehma.CURRENT_DATE,DatabaseScehma.LAST_EDITED,DatabaseScehma.COLOR,DatabaseScehma.FILE_PATH};
+      DatabaseScehma.ID,
+            DatabaseScehma.TITLE,
+            DatabaseScehma.DESCRIPTION,
+            DatabaseScehma.CURRENT_DATE,
+            DatabaseScehma.LAST_EDITED,
+            DatabaseScehma.COLOR,
+            DatabaseScehma.FILE_PATH};
 
     if(sortBy==0)
         sortByColumn = DatabaseScehma.TITLE+ " COLLATE NOCASE";
@@ -86,7 +92,13 @@ public Cursor getAllNote(int sortBy)
     {
          SQLiteDatabase db = schema.getWritableDatabase();
         String columns[] = {
-                DatabaseScehma.ID,DatabaseScehma.TITLE,DatabaseScehma.DESCRIPTION,DatabaseScehma.CURRENT_DATE,DatabaseScehma.LAST_EDITED,DatabaseScehma.COLOR,DatabaseScehma.FILE_PATH};
+                DatabaseScehma.ID,
+                DatabaseScehma.TITLE,
+                DatabaseScehma.DESCRIPTION,
+                DatabaseScehma.CURRENT_DATE,
+                DatabaseScehma.LAST_EDITED,
+                DatabaseScehma.COLOR,
+                DatabaseScehma.FILE_PATH};
         Cursor cursor= db.query(DatabaseScehma.TABLE_NAME,columns,DatabaseScehma.ID+"="+rowId,null,null,null,null);
 
         if(cursor!=null)
@@ -95,6 +107,8 @@ public Cursor getAllNote(int sortBy)
         return cursor;
 
     }
+
+    //Used for
 
     public Cursor getAllNode(String sequence){
 
@@ -160,7 +174,7 @@ public Cursor getAllNote(int sortBy)
    static class DatabaseScehma extends SQLiteOpenHelper
     {
         private static final String DATABASE_NAME = "Abdullah";
-        private static final int DATABASE_VERSION=68;
+        private static final int DATABASE_VERSION=71;
         private static final String TABLE_NAME="Notes";
         private static final String ID = "_id";
         private  static final String TITLE = "title";

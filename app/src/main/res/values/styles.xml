@@ -55,6 +55,12 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:clickable">true</item>
+
+    <item name="android:layout_marginLeft">8dp</item>
+    <item name="android:layout_marginTop">0dp</item>
+    <item name="android:layout_marginRight">8dp</item>
+    <item name="android:layout_marginBottom">0dp</item>
+
 </style>
 
 
@@ -66,7 +72,7 @@
 
    <!-- styling dialog -->
 
-    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Dialog">
         <!--item RadioButton or CheckBox color-->
         <item name="colorControlNormal">@android:color/white</item>
         <item name="colorControlActivated">@color/accent</item>
@@ -80,14 +86,21 @@
         <item name="android:windowBackground">@color/primary</item>
 
 
+
 <item name="android:listSelector">@color/accent</item>
     </style>
 
 
-    <style name="DialogStyle" parent="Base.Theme.AppCompat.Dialog">
-        <item name="android:windowMinWidthMajor">97%</item>
-        <item name="android:windowMinWidthMinor">97%</item>
+
+
+
+    <style name="titletext" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+
     </style>
+
+    <style name="SubTitleText" parent="TextAppearance.AppCompat.Caption">
+
+        </style>
 
 
 
